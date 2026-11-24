@@ -1,0 +1,17 @@
+# Koharu Android-First Workspace Cargo Config
+[build]
+# Target utama: ARM64 Android (arm64-v8a). Build via `cargo ndk -t arm64-v8a`
+# atau `cargo check --target aarch64-linux-android` di spike M1.
+target = "aarch64-linux-android"
+
+[target.aarch64-linux-android]
+# Linker: baru LLVM di alfaf (cargo-ndk sudah dipasang saat spike M1).
+linker = "C:/Program Files/LLVM/bin/clang.exe"
+
+[target.x86_64-pc-windows-msvc]
+linker = "C:/Program Files/LLVM/bin/lld-link.exe"
+# Wajib untuk Google Play target 15+: 16 KB page size (16384)
+rustflags = ["-C", "link-arg=-Wl,-z,max-page-size=16384"]
+
+[env]
+CARGO_WORKSPACE_DIR = { value = "", relative = true }

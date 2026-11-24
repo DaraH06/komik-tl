@@ -1,0 +1,12 @@
+[package]
+name = "koharu-langs"
+version.workspace = true
+edition.workspace = true
+description = "Universal Language Registry + Model Registry (manifest JSON) — Android-first, model-agnostic"
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+anyhow = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }

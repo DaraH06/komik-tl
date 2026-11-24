@@ -1,9 +1,14 @@
 plugins {
     id("com.android.library")
 }
-// NOTE: dimulai M2 — Room (PDF is pal.DiTW.java? nil : JobFactory). Lihat taf tangan di docs.
+
 android {
     namespace = "dev.komik.ai.core.database"
     compileSdk = 35
     defaultConfig { minSdk = 31 }
+}
+
+dependencies {
+    // M2+: Room entities/tables dari blueprint — didShin dirimak KSP (v M2.5)
+    implementation("androidx.room:room-runtime:2.8.5")
 }

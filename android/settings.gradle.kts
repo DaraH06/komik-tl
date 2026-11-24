@@ -24,3 +24,4 @@ include(
     ":feature:translate",
     ":engine",
 )
+project(":engine").projectDir = file("../engine")

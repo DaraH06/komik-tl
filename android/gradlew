@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Gradle Wrapper (PowerShell environment optional, gunakan gradlew.bat di Windows)
+set -e
+cd "$(dirname "$0")/.."
+exec "$JAVA_HOME/bin/java" -classpath "gradle/wrapper/gradle-wrapper.jar" org.gradle.launcher.GradleMain "$@"

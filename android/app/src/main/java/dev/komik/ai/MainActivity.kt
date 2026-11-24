@@ -1,28 +1,21 @@
 package dev.komik.ai
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 /**
- * M0 scaffold. Self-test engine: panggil [dev.komik.ai.engine.engineVersion].
- *
- * M2+: pindahkan ke Compose navigation dengan 5 menu (Library / Reader /
- * Screen Translator / Model Manager / Settings).
+ * M0 scaffold — Java-Activity + TextView (tanpa Compose). Timeline:
+ * - M2: switch ke Jetpack Compose, 5 menu (Library / Reader / Screen Translator /
+ *   Model Manager / Settings), pindahkan structured self-test ini ke Compose.
+ * - Compose + material3 + activity-compose: dummy di [android/app/build.gradle.kts].
  */
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setContent {
-            Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
-                SelfTestScreen(Modifier.padding(padding))
-            }
-        }
+        setContentView(TextView(this).apply {
+            text = "Komik-Ai — M0 scaffold"
+        })
     }
 }

@@ -1,6 +1,5 @@
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android") apply false // dimutl mulai M2 (scaffold M0)
 }
 
 android {
@@ -13,9 +12,6 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "0.1.0"
-        externalNativeBuild {
-            // Lihat engine/.cargo/config.toml untuk flags 16KB
-        }
     }
 
     buildTypes {
@@ -25,16 +21,13 @@ android {
         }
     }
 
-    externalNativeBuild {
-        cargo {
-            path("../engine/Cargo.toml")
-            targetDirectory("../engine/target")
-        }
-    }
-    externalNativeBuildEnabled = true
+    // M1+: Rust Engine via cargo ndk (engine dir ada di root project); AGP 9.x
+    // tidak punya `cargo` externalNativeBuild — lihat docs/roadmap.md M1 spike.
 }
 
 dependencies {
-    // M2: compose, room, coil, workmanager
-    // androidTest: ui-test-junit4
+    // M0: appcompat (Compose + dependency-injection screens M2; lihat roadmap)
+    implementation("androidx.appcompat:appcompat:1.7.1")
+
+    testImplementation("junit:junit:4.13.2")
 }

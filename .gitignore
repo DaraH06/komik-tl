@@ -6,9 +6,8 @@ engine/target/
 engine/crates/*/target/
 
 android/.gradle/
-android/build/
-android/app/build/
-android/gradle/
+android/.kotlin/
+android/**/build/
 android/*.iml
 
 models/*.bin

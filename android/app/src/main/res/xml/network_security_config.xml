@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Offline murni M0: tidak ada situs eksplisit yang diizinkan.
+     Untuk feature Source Dekat (M7+, sebelumnya sumber biasa), list ditambah disini. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+</network-security-config>

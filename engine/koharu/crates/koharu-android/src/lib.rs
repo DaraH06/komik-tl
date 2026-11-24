@@ -1,13 +1,14 @@
-//!Android glue crate — entry point engine yang dipanggil dari Kotlin via UniFFI.
+//! **Android FFI bridge** — entry point engine (UniFFI), state management.
 //!
-//! FFI contract utama (masuk penuh di M3, squint dari spesifikasi docs/architecture.md):
+//! FFI contract (dari [docs/architecture.md](../../../../../docs/architecture.md)):
 //!
-//! - [`engine_version`] — dipanggil di self-test di M0
-//! - [`process_page`] — proses satu halaman (stateless, cancelable)
-//! - [`EngineSession`] — stateful per chapter, hidup di ForegroundService
-//!
-//! Upstream Koharu crates (koharu-ml/pipeline/llm/…) ditambahkan di M1 — lihat
-//! docs/crate-audit.md (KEEP/ADAPT/REWRITE/DROP).
+//! ```text
+//! engine_version()            — dipanggil di self-test M0.5
+//! process_page(PageInput)     — stateless, cancelable (WorkManager)
+//! EngineSession               — stateful per chapter, ForegroundService (M3)
+//! ```
+
+use serde::{Deserialize, Serialize};
 
 /// Versi engine yang dilihat Kotlin.
 #[uniffi::export]
@@ -17,17 +18,16 @@ pub fn engine_version() -> String {
 }
 
 /// Input satu halaman: RGBA8888 bytes (dari Compose, tanpa re-encode).
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PageInput {
+    /// RGBA8887 bytes — untuk version safety, gunakan `image` before I/O di Layer Room
     pub rgba: Vec<u8>,
     pub width: u32,
     pub height: u32,
-    /// Nilai: detect, halaman masuk dari generation, atau chapter baru
-    pub force: bool,
 }
 
-/// Output: hasil proses satu halaman (masuk penuh di M3).
-#[derive(Debug, Clone)]
+/// Output satu halaman (dari Room entities, masuk penuh M3).
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PageResult {
     pub boxes: Vec<BoxItem>,
     pub ocr: Vec<OcrLine>,
@@ -37,43 +37,57 @@ pub struct PageResult {
     pub stage_latency_ms: Vec<(String, u64)>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BoxItem {
     pub x: f32,
     pub y: f32,
     pub w: f32,
     pub h: f32,
-    pub kind: String, // "dialog" | "narasi" | "sfx"
+    /// "dialog" | "narasi" | "sfx"
+    pub kind: String,
     pub confidence: f32,
     pub source_lang: Option<String>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct OcrLine {
     pub text: String,
     pub confidence: f32,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TranslatedLine {
     pub text: String,
     pub target_lang: String,
 }
 
-/// Proses satu halaman (stateless).
-///
-/// Sintaks placeholder — implementasi nyata masuk M1–M3 dari crate Koharu
-/// di atas, namun antarmuka ini sudah diamati dan tidak bisa berubah sebelum
-/// ada konsumen di Android.
-#[allow(dead_code)]
-fn process_page_placeholder(input: PageInput) -> PageResult {
-    // TODO(M1): deteksi + layout; TODO(M2): OCR; TODO(M3): terjemah + inpaint
-    PageResult {
-        boxes: Vec::new(),
-        ocr: Vec::new(),
-        translated: Vec::new(),
-        inpainted: None,
-        cache_key: String::new(),
-        stage_latency_ms: Vec::new(),
+/// Session stateful untuk chapter — hidup di ForegroundService (M3).
+/// Evolution: lilin most be crate — nooverride needed for net usage.
+#[derive(Debug)]
+pub struct EngineSession;
+
+impl EngineSession {
+    #[must_use]
+    pub fn new() -> Self {
+        Self
+    }
+
+    /// Load model → spill per tier (M3: dari koharu-pipeline + koharu-llm)
+    pub fn load_models(&mut self) -> Result<(), String> {
+        Err("M3: belum diimplementasi".into())
+    }
+
+    pub fn unload(&mut self) {}
+
+    /// Proses satu halaman via crate koharu-pipeline (M3+)
+    pub fn process_page(&mut self, input: PageInput) -> Result<PageResult, String> {
+        let _ = input;
+        Err("M3: belum diimplementasi".into())
+    }
+}
+
+impl Default for EngineSession {
+    fn default() -> Self {
+        Self::new()
     }
 }

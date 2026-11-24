@@ -34,6 +34,9 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.4.0")
     implementation("androidx.compose.ui:ui-text:1.10.6")
     implementation("androidx.activity:activity-compose:1.13.0")
+    implementation("androidx.work:work-runtime:2.12.0") // M3: processing jobs/chapter
+    implementation(project(":core:database")) // M2: Room data layer
+    // M3: libtorch-android ktorun (sukTok), koharu-android EngineSession/Ffi
 
     testImplementation("junit:junit:4.13.2")
 }

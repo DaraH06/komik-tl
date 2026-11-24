@@ -26,7 +26,8 @@ android {
 }
 
 dependencies {
-    // M0: appcompat (Compose + dependency-injection screens M2; lihat roadmap)
+    // M0: appcompat skeleton (dari M2: + Compose 1.13.0/material3, activity-compose, material3... —
+    // mismatch inline Kotlin 2.4.20 di sini saat ini, iterasi saat M2)
     implementation("androidx.appcompat:appcompat:1.7.1")
 
     testImplementation("junit:junit:4.13.2")

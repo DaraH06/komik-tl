@@ -1,5 +1,6 @@
 plugins {
     id("com.android.library")
+    // KSP (Room compiler): pickup M3 — versi stabil saat ini belum compatible dengan Kotlin 2.4.20 di AGP 9.5.2, coba ksp 2.3.14+ atau ksp 2.4.x
 }
 
 android {
@@ -9,6 +10,6 @@ android {
 }
 
 dependencies {
-    // M2+: Room entities/tables dari blueprint — didShin dirimak KSP (v M2.5)
     implementation("androidx.room:room-runtime:2.8.5")
+    // ksp("androidx.room:room-compiler:2.8.5") — pickup saat M3
 }

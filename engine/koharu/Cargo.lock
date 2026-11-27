@@ -5733,6 +5733,7 @@ name = "koharu-android"
 version = "0.95.2"
 dependencies = [
  "anyhow",
+ "serde",
  "uniffi",
 ]
 

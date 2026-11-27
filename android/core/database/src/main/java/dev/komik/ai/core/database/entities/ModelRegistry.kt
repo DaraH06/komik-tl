@@ -1,7 +1,11 @@
 package dev.komik.ai.core.database.entities
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "model_registry")
 data class ModelRegistry(
-    val id: String,
+    @PrimaryKey val id: String,
     val kind: String,
     val backend: String,
     val sha256: String,

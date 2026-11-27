@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application") version "9.5.2" apply false
+    id("com.google.devtools.ksp") version "2.3.14" apply false
 }
 // NOTE: AGP 9.x memiliki Kotlin built-in (plugin kotlin.android tak perlu, lihat error konfigurasi)
 

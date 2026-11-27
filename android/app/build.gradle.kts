@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
@@ -21,6 +22,10 @@ android {
         }
     }
 
+    buildFeatures {
+        compose = true
+    }
+
     // M1+: Rust Engine via cargo ndk (engine dir ada di root project); AGP 9.x
     // tidak punya `cargo` externalNativeBuild — lihat docs/roadmap.md M1 spike.
 }
@@ -36,6 +41,8 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.13.0")
     implementation("androidx.work:work-runtime:2.12.0") // M3: processing jobs/chapter
     implementation(project(":core:database")) // M2: Room data layer
+    implementation("androidx.room:room-runtime:2.8.5")
+    implementation(project(":feature:library")) // M2b: SAF import CBZ
     // M3: libtorch-android ktorun (sukTok), koharu-android EngineSession/Ffi
 
     testImplementation("junit:junit:4.13.2")

@@ -1,18 +1,13 @@
 package dev.komik.ai
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 
-/**
- * Skeleton - M2+: 5 menu utama via Compose Navigation (Library / Reader /
- * Screen Translator / Model Manager / Settings).
- */
-class MainActivity : AppCompatActivity() {
-
+/** Komik AI — app shell. M2: Library + Reader (tanpa AI). AI pipeline = M3. */
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(android.widget.TextView(this).apply {
-            text = "Komik-Ai - skeleton (Compose M2)"
-        })
+        setContent { KomikApp() }
     }
 }

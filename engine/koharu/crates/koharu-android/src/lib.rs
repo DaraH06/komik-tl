@@ -8,6 +8,8 @@
 //! EngineSession               — stateful per chapter, ForegroundService (M3)
 //! ```
 
+uniffi::setup_scaffolding!();
+
 use serde::{Deserialize, Serialize};
 
 /// Versi engine yang dilihat Kotlin.
